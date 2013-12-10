@@ -1,7 +1,7 @@
 hassock
 =======
 
-Pure bash script to PUT a single file to CouchDB  
+Pure bash script to PUT a single file to [CouchDB](https://github.com/apache/couchdb "CouchDB")  
 
 Usage: hassock --database=yourdb yourdoc.json  
 
