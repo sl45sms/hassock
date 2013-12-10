@@ -15,3 +15,8 @@ Commands:
 -s --server    The CouchDB server name or IP. (optional, default to 127.0.0.1)  
 -p --port      The port of CouchDB server. (optional, default to 5984)  
 -v --verbose   Set twice to show the steps or only once for server response. (optional)  
+
+
+
+Pure?  
+no curl or other external programs used on this script :) 
