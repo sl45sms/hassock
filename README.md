@@ -3,6 +3,9 @@ hassock
 
 Pure bash script to PUT a single doc to [CouchDB](https://github.com/apache/couchdb "CouchDB")  
 
+Use it in cases that you need a simple script to put or update a doc in CouchDB.   
+For more complex tasks (ie webapp) you would need a tool like [erica](https://github.com/benoitc/erica "erica")   
+  
 Usage: hassock --database=yourdb yourdoc.json  
 
 Commands:  
