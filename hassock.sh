@@ -34,12 +34,13 @@ FILENAME=""
 function help {
                echo "Usage: hassock --database=yourdb yourdoc.json"
                echo "Commands: 
-                    -h --help      This help.
-                    -d --database  The database to PUT doc. (optional, if not provided db name from filename,you have to create db first)
-                    -i --docid     The _id for doc. (optional, if not provided _id from filename)
-                    -s --server    The CouchDB server name or IP. (optional, default to 127.0.0.1)
-                    -p --port      The port of CouchDB server. (optional, default to 5984)
-                    -v --verbose   Set twice to show the steps or only once for server response. (optional)                 
+                    -h --help       This help.
+                    -d --database   The database to PUT doc. (optional, if not provided db name from filename,you have to create db first)
+                    -i --docid      The _id for doc. (optional, if not provided _id from filename)
+                    -r --removepath Remove path of provided doc (optional, useful if not set -d or/add -i)
+                    -s --server     The CouchDB server name or IP. (optional, default to 127.0.0.1)
+                    -p --port       The port of CouchDB server. (optional, default to 5984)
+                    -v --verbose    Set twice to show the steps or only once for server response. (optional)                 
                     "
            }
 
@@ -87,6 +88,10 @@ do
             VERBOSE=$((VERBOSE+1))
             shift
             ;;
+        -r | --removepath)
+            REMOVEPATH=1
+            shift
+            ;;
         --) 
             shift
             break
@@ -113,14 +118,25 @@ fi
 
 #set defaults
 if [ ! "$DATABASE" ]; then
-DATABASE=$FILENAME 
+if [ ! "$REMOVEPATH" ]; then
+DATABASE=${FILENAME//$'/'/$'%2f'}
+DATABASE=${DATABASE//$' '/$'%20'}
+else
+DATABASE=${FILENAME##*/}
 fi
+fi
+
 if [ ! "$DOCKID" ]; then
-DOCID=$FILENAME
+if [ ! "$REMOVEPATH" ]; then
+DOCID=${FILENAME//$'/'/$'%2f'}
+DOCID=${DOCID//$' '/$'%20'}
+else
+DOCID=${FILENAME##*/}
+fi
 fi
 
 #clean up json
-JSON=$(<$FILENAME.json) 
+JSON=$(<"$FILENAME.json") 
 #TODO clean up JSON in one line...?
 JSON=${JSON//$'\r'/$''}
 JSON=${JSON//$'\n'/$''}
